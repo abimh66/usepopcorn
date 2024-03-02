@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
+import { useKey } from '../../useKey';
 import Loader from '../Loader';
 import StarRating from '../StarRating';
 
@@ -63,14 +64,7 @@ export default function MovieDetails({
     };
   }, [title]);
 
-  useEffect(() => {
-    const callbackFn = (event) => {
-      if (event.code === 'Escape') onCloseMovie();
-    };
-
-    document.addEventListener('keydown', callbackFn);
-    return () => document.removeEventListener('keydown', callbackFn);
-  }, [onCloseMovie]);
+  useKey('Escape', onCloseMovie);
 
   return (
     <div className="details">
