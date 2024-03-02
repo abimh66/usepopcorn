@@ -18,8 +18,11 @@ const KEY = '4a69f26f';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [query, setQuery] = useState('parasite');
+  const [watched, setWatched] = useState(() => {
+    const storedValue = localStorage.getItem('watched');
+    return storedValue ? JSON.parse(storedValue) : [];
+  });
+  const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedId, setSelectedId] = useState(null);
@@ -34,9 +37,17 @@ export default function App() {
     setWatched((movies) => [...movies, newMovie]);
     setSelectedId(null);
   }
+  function handleAddQuery(inputQuery) {
+    setQuery(inputQuery);
+    setSelectedId(null);
+  }
   function handleDeleteMovie(id) {
     setWatched((movies) => movies.filter((movie) => movie.imdbID !== id));
   }
+
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify(watched));
+  }, [watched]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -64,11 +75,10 @@ export default function App() {
         return setMovies(data.Search);
       })
       .catch((e) => {
-        if (e.name !== 'AbortError') setError(e.message);
+        e.name !== 'AbortError' ? setError(e.message) : setError('');
       })
       .finally(() => {
         setIsLoading(false);
-        setError('');
       });
 
     return () => controller.abort();
@@ -77,11 +87,12 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search query={query} onQueryChange={setQuery} />
+        <Search query={query} onQueryChange={handleAddQuery} />
         <NumResult movies={movies} />
       </NavBar>
       <Main>
         <Box>
+          {query.length < 3 && <p className="loader">Go find a movie</p>}
           {isLoading ? (
             <Loader />
           ) : error ? (
