@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import { useMovies } from './useMovies';
-import { useLocalStorageState } from './useLocalStorageState';
+import { useMovies } from './hooks/useMovies';
+import { useLocalStorageState } from './hooks/useLocalStorageState';
 
 import Box from './components/Box';
 import Loader from './components/Loader';

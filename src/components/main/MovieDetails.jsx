@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
-import { useKey } from '../../useKey';
+import { useKey } from '../../hooks/useKey';
 import Loader from '../Loader';
 import StarRating from '../StarRating';
 

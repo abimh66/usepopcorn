@@ -1,17 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useRef } from 'react';
-import { useKey } from '../../useKey';
+import { useRef, useEffect } from 'react';
+import { useKey } from '../../hooks/useKey';
+
 export default function Search({ query, onQueryChange }) {
   const inputEl = useRef(null);
 
-  useKey(
-    'Enter',
-    () => {
-      if (document.activeElement == inputEl.current) return;
-      inputEl.current.focus();
-    },
-    () => inputEl.current.focus()
-  );
+  useKey('Enter', () => {
+    if (document.activeElement == inputEl.current) return;
+    inputEl.current.focus();
+  });
+  useEffect(() => inputEl.current.focus(), []);
 
   return (
     <input
