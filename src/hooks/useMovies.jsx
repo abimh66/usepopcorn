@@ -19,7 +19,7 @@ export function useMovies(query) {
       return;
     }
 
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`, {
+    fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`, {
       signal: controller.signal,
     })
       .then((res) => {

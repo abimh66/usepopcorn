@@ -48,7 +48,7 @@ export default function MovieDetails({
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`)
+    fetch(`https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`)
       .then((res) => res.json())
       .then((data) => setMovie(data))
       .finally(() => setIsLoading(false));
